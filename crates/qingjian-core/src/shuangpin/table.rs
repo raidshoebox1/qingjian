@@ -360,3 +360,58 @@ pub const SHOUDAO: Table = Table {
     zero_initials: SHOUDAO_ZERO_INITIALS,
     semicolon: false,
 };
+
+/// 拼音加加的翘舌声母：v 为 zh，u 为 ch，i 为 sh（ch / sh 与微软的键互换）。
+pub const PYJJ_DIGRAPH_INITIALS: [(char, &str); 3] = [('v', "zh"), ('u', "ch"), ('i', "sh")];
+
+/// 拼音加加的零声母写法：`o` 加韵母键，`a` / `e` 开头的也接受双写元音。
+const PYJJ_ZERO_INITIALS: &[(&str, &[&str])] = &[
+    ("a", &["oa", "aa"]),
+    ("ai", &["os", "as"]),
+    ("an", &["of", "af"]),
+    ("ang", &["og", "ag"]),
+    ("ao", &["od", "ad"]),
+    ("e", &["oe", "ee"]),
+    ("ei", &["ow", "ew"]),
+    ("en", &["or", "er"]),
+    ("eng", &["ot", "et"]),
+    ("er", &["oq", "eq"]),
+    ("o", &["oo"]),
+    ("ou", &["op", "ou"]),
+];
+
+/// 拼音加加：翘舌 zh=`v` ch=`u` sh=`i`；`x` 兼 üe 与 uai，`v` 兼 ui 与 ü。
+/// 键位取 Rime `double_pinyin_pyjj` 的拼写运算。
+pub const PYJJ: Table = Table {
+    digraph_initials: &PYJJ_DIGRAPH_INITIALS,
+    finals: &[
+        ('a', &["a"]),
+        ('b', &["ia", "ua"]),
+        ('c', &["uan"]),
+        ('d', &["ao"]),
+        ('e', &["e"]),
+        ('f', &["an"]),
+        ('g', &["ang"]),
+        ('h', &["iang", "uang"]),
+        ('i', &["i"]),
+        ('j', &["ian"]),
+        ('k', &["iao"]),
+        ('l', &["in"]),
+        ('m', &["ie"]),
+        ('n', &["iu"]),
+        ('o', &["uo", "o"]),
+        ('p', &["ou"]),
+        ('q', &["ing"]),
+        ('r', &["en"]),
+        ('s', &["ai"]),
+        ('t', &["eng"]),
+        ('u', &["u"]),
+        ('v', &["ui", "v"]),
+        ('w', &["ei"]),
+        ('x', &["ve", "ue", "uai"]),
+        ('y', &["iong", "ong"]),
+        ('z', &["un"]),
+    ],
+    zero_initials: PYJJ_ZERO_INITIALS,
+    semicolon: false,
+};

@@ -32,11 +32,14 @@ pub enum Scheme {
 
     /// 首道双拼。
     Shoudao,
+
+    /// 拼音加加。
+    Pyjj,
 }
 
 impl Scheme {
     /// 全部方案，设置界面按这个顺序列出。
-    pub const ALL: [Self; 7] = [
+    pub const ALL: [Self; 8] = [
         Self::Xiaohe,
         Self::Ziranma,
         Self::Microsoft,
@@ -44,6 +47,7 @@ impl Scheme {
         Self::Abc,
         Self::Xiaolang,
         Self::Shoudao,
+        Self::Pyjj,
     ];
 
     /// 配置文件里的写法。`const`：设置界面要按方案列表建常量表（见 `qingjian_platform::Scheme`）。
@@ -56,6 +60,7 @@ impl Scheme {
             Self::Abc => "abc",
             Self::Xiaolang => "xiaolang",
             Self::Shoudao => "shoudao",
+            Self::Pyjj => "pyjj",
         }
     }
 
@@ -69,6 +74,7 @@ impl Scheme {
             Self::Abc => "智能ABC",
             Self::Xiaolang => "小浪双拼",
             Self::Shoudao => "首道双拼",
+            Self::Pyjj => "拼音加加",
         }
     }
 
@@ -81,6 +87,7 @@ impl Scheme {
             Self::Abc => &table::ABC,
             Self::Xiaolang => &table::XIAOLANG,
             Self::Shoudao => &table::SHOUDAO,
+            Self::Pyjj => &table::PYJJ,
         }
     }
 
@@ -375,6 +382,15 @@ mod tests {
             (Scheme::Xiaolang, "urqp", "er'qie"),
             (Scheme::Xiaolang, "nxhk", "nv'hai"),
             (Scheme::Xiaolang, "ahnx", "ang'nv"),
+            (Scheme::Pyjj, "nihd", "ni'hao"),
+            (Scheme::Pyjj, "vygo", "zhong'guo"),
+            (Scheme::Pyjj, "ihpl", "shuang'pin"),
+            (Scheme::Pyjj, "xxxi", "xue'xi"),
+            (Scheme::Pyjj, "iiii", "shi'shi"),
+            (Scheme::Pyjj, "wsgo", "wai'guo"),
+            (Scheme::Pyjj, "yyke", "yong'ke"),
+            (Scheme::Pyjj, "nvhs", "nv'hai"),
+            (Scheme::Pyjj, "agnv", "ang'nv"),
         ];
         for (scheme, keys, expected) in cases {
             assert_eq!(scheme.decode(keys).pinyin(), expected, "{scheme}: {keys}");
@@ -404,6 +420,15 @@ mod tests {
         assert_eq!(Scheme::Shoudao.decode("jl").pinyin(), "jue");
         assert_eq!(Scheme::Shoudao.decode("ll").pinyin(), "lai");
         assert_eq!(Scheme::Shoudao.decode("lb").pinyin(), "lve");
+        // 拼音加加的翘舌与微软相反：ch 在 u、sh 在 i；üe 与 uai 同在 x，ui 与 zh 同在 v
+        assert_eq!(Scheme::Pyjj.decode("uu").pinyin(), "chu");
+        assert_eq!(Scheme::Pyjj.decode("ii").pinyin(), "shi");
+        assert_eq!(Scheme::Pyjj.decode("hx").pinyin(), "huai");
+        assert_eq!(Scheme::Pyjj.decode("xx").pinyin(), "xue");
+        assert_eq!(Scheme::Pyjj.decode("vv").pinyin(), "zhui");
+        // 零声母 o 前缀：er 是 oq / eq，en 是 or / er
+        assert_eq!(Scheme::Pyjj.decode("oq").pinyin(), "er");
+        assert_eq!(Scheme::Pyjj.decode("er").pinyin(), "en");
     }
 
     #[test]
