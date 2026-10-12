@@ -2922,7 +2922,7 @@ dependencies = [
 
 [[package]]
 name = "qingjian-windows-server"
-version = "0.2.1-dev"
+version = "0.2.1"
 dependencies = [
  "dotenvy",
  "embed-manifest",
