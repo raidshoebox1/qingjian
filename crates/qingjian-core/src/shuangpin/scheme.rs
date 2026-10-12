@@ -429,6 +429,22 @@ mod tests {
         // 零声母 o 前缀：er 是 oq / eq，en 是 or / er
         assert_eq!(Scheme::Pyjj.decode("oq").pinyin(), "er");
         assert_eq!(Scheme::Pyjj.decode("er").pinyin(), "en");
+        // 拼音加加零声母按官方键位表以双写 + 韵母键为主（aa as ad af ag / ee ew er et eq / oo op），o 前缀写法一并接受
+        for (keys, expected) in [
+            ("aa", "a"),
+            ("as", "ai"),
+            ("af", "an"),
+            ("ag", "ang"),
+            ("ad", "ao"),
+            ("ee", "e"),
+            ("ew", "ei"),
+            ("et", "eng"),
+            ("op", "ou"),
+            ("oo", "o"),
+        ] {
+            assert_eq!(Scheme::Pyjj.decode(keys).pinyin(), expected, "pyjj: {keys}");
+        }
+        assert_eq!(Scheme::Pyjj.decode("eq").pinyin(), "er");
     }
 
     #[test]

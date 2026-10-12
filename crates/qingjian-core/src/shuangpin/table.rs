@@ -364,18 +364,19 @@ pub const SHOUDAO: Table = Table {
 /// 拼音加加的翘舌声母：v 为 zh，u 为 ch，i 为 sh（ch / sh 与微软的键互换）。
 pub const PYJJ_DIGRAPH_INITIALS: [(char, &str); 3] = [('v', "zh"), ('u', "ch"), ('i', "sh")];
 
-/// 拼音加加的零声母写法：`o` 加韵母键，`a` / `e` 开头的也接受双写元音。
+/// 拼音加加的零声母写法：双写首字母 + 韵母键（`aa` `as` `ag` / `ee` `ew` `et` `eq` / `oo` `op`），
+/// `o` 前缀的写法也接受。
 const PYJJ_ZERO_INITIALS: &[(&str, &[&str])] = &[
-    ("a", &["oa", "aa"]),
-    ("ai", &["os", "as"]),
-    ("an", &["of", "af"]),
-    ("ang", &["og", "ag"]),
-    ("ao", &["od", "ad"]),
-    ("e", &["oe", "ee"]),
-    ("ei", &["ow", "ew"]),
-    ("en", &["or", "er"]),
-    ("eng", &["ot", "et"]),
-    ("er", &["oq", "eq"]),
+    ("a", &["aa", "oa"]),
+    ("ai", &["as", "os"]),
+    ("an", &["af", "of"]),
+    ("ang", &["ag", "og"]),
+    ("ao", &["ad", "od"]),
+    ("e", &["ee", "oe"]),
+    ("ei", &["ew", "ow"]),
+    ("en", &["er", "or"]),
+    ("eng", &["et", "ot"]),
+    ("er", &["eq", "oq"]),
     ("o", &["oo"]),
     ("ou", &["op", "ou"]),
 ];
